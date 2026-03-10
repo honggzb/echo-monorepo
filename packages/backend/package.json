@@ -16,7 +16,8 @@
     "convex": "^1.32.0"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
-    "@workspace/typescript-config": "workspace:*"
+    "@types/node": "^25.1.0",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "5.9.3"
   }
 }
