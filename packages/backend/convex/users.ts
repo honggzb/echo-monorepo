@@ -11,6 +11,10 @@ export const getUsers = query({
 export const addUser = mutation({
     args: {},
     handler: async ({ db }) => {
+        // const identity = await db.auth.getUserIdentity();
+        // if (!identity) {
+        //     throw new Error("Unauthorized");
+        // }
         const userId = await db.insert("users", {
             name: "New User",
         });
