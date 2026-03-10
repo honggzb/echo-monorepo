@@ -10,12 +10,18 @@ export const getUsers = query({
 
 export const addUser = mutation({
     args: {},
-    handler: async ({ db }) => {
-        // const identity = await db.auth.getUserIdentity();
-        // if (!identity) {
-        //     throw new Error("Unauthorized");
-        // }
-        const userId = await db.insert("users", {
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity) {
+            throw new Error("Unauthorized");
+        }
+
+        const orgId = identity.orgId as string;
+        if (!orgId) {
+            throw new Error("Missing organization");
+        }
+
+        const userId = await ctx.db.insert("users", {
             name: "New User",
         });
         return userId;
