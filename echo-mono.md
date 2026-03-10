@@ -204,9 +204,4 @@ sequenceDiagram
   - https://docs.convex.dev/auth/clerk#nextjs
   - https://clerk.com/docs/nextjs/getting-started/quickstart
 
-
-[🚀back to top](#top)
-
-- https://www.codewithantonio.com/workshops/build-and-deploy-a-b2b-saas-ai-support-platform
-- [Build and Deploy a B2B AI SaaS Support Platform | Next.js 15, React, Convex, Turborepo, Vapi, AWS](https://www.youtube.com/watch?v=CAr02YlEJUc)
-- https://github.com/code-with-antonio/next15-echo
+back to top](#top)
