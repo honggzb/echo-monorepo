@@ -1,10 +1,19 @@
-import { AuthLayout } from "../modules/auth/ui/layouts/auth-layout";
+import { ThemeProvider } from "@/components/theme-provider";
+import DashboardLayout from "../modules/auth/ui/dashboard/ui/layouts/dashboard-layout";
+//import { AuthLayout } from "../modules/auth/ui/layouts/auth-layout";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <AuthLayout>
-        {children}
-    </AuthLayout>
+    <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+    >
+      <DashboardLayout>
+          {children}
+      </DashboardLayout>
+    </ThemeProvider>
     )
 }
 

@@ -14,8 +14,8 @@ export default function Page() {
       <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
         widget app
       </div>
-      <Button onClick={() => startCall()}>Start Call</Button>
-      <Button onClick={() => endCall()}>End Call</Button>
+      <Button variant="secondary" onClick={() => startCall()}>Start Call</Button>
+      <Button variant="secondary" onClick={() => endCall()}>End Call</Button>
       <p>IsConnected: {`${isConnected}`}</p>
       <p>IsConnecting: {`${isConnecting}`}</p>
       <p>IsSpeaking: {`${isSpeaking}`}</p>
