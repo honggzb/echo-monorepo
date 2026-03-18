@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@clerk/backend": "^3.2.0",
     "convex": "^1.32.0"
   },
   "devDependencies": {

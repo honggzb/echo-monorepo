@@ -16,3 +16,5 @@ const Page = ({ searchParams }: PageProps) => {
 }
 
 export default Page;
+
+// localhost:3001/?organizationId=123

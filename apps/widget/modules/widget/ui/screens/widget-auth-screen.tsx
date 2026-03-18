@@ -13,6 +13,9 @@ import { WidgetHeader } from '../components/widget-header';
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { Doc } from "@workspace/backend/_generated/dataModel";
+import { use } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { contactSessionIdAtomFamily, organizationIdAtom } from "../atoms/widget-atoms";
 
 const widgetAuthSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -34,7 +37,9 @@ const WidgetAuthScreen = () => {
       email: "",
     },
   });
-  const organizationId = "org_123"; // Replace with actual organization ID logic
+  //const organizationId = "org_123"; // Replace with actual organization ID logic
+  const organizationId = useAtomValue(organizationIdAtom);
+  const setContactSessionId = useSetAtom(contactSessionIdAtomFamily(organizationId || ""));
   const createContactSession = useMutation(api.public.contactSessions.createContactSession);
 
   const onSubmit = async (data: WidgetAuthFormData) => {
@@ -62,6 +67,7 @@ const WidgetAuthScreen = () => {
         metadata,
     });
     console.log({contactSessionId});
+    setContactSessionId(contactSessionId);
   }
 
   return (
