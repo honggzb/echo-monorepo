@@ -10,6 +10,7 @@ export const screenAtom = atom<WidgetScreen>("loading");
 export const organizationIdAtom = atom<string | null>(null);
 // organization-scoped contact session atoms
 export const contactSessionIdAtomFamily = atomFamily((organizationId: string) => {
+  // save organizationId to localStorage with a key that includes the organization ID to support multiple organizations on the same domain
   return atomWithStorage(`${CONTACT_SESSION_KEY}_${organizationId}`, organizationId);
 });
 export const errorMessageAtom = atom<string | null>(null);
