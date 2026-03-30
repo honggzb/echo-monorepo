@@ -82,7 +82,6 @@ import { add } from "@workspace/math/add";
 
 ## Convex integration
 
-- honggzb86@gmail.com Newyear11!
 1. `pnpm build`  👉 check whether there is missing dependencies
    1. run `pnpm -F eslint-config add --save-dev @esling/js` if missing dependencies
 2. setup Convex backend: refer to https://github.com/get-convex/turbo-expo-nextjs-clerk-convex-monorepo
