@@ -32,6 +32,7 @@ import {
 import { AIResponse } from "@workspace/ui/components/ai/response";
 import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
 import InfiniteScrollTrigger from '@workspace/ui/components/InfiniteScrollTrigger';
+import DicebearAvatar from '@workspace/ui/components/dicebear-avatar';
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
@@ -94,10 +95,10 @@ const WidgetChatScreen = () => {
     <>
       <WidgetHeader className='flex items-center justify-between'>
             <div className="flex items-center gap-x-2">
-              <Button size="icon" variant="transparent" onClick={onBack}><ArrowLeftIcon /></Button>
+              <Button size="icon" variant="ghost" onClick={onBack}><ArrowLeftIcon /></Button>
               <p>Chat</p>
             </div>
-            <Button size="icon" variant="transparent"><MenuIcon /></Button>
+            <Button size="icon" variant="ghost"><MenuIcon /></Button>
         </WidgetHeader>
         {/* <div className="flex flex-1 flex-col gap-y-4 p-4">
             <AlertTriangleIcon />
@@ -120,13 +121,13 @@ const WidgetChatScreen = () => {
                   <AIResponse>{message.text}</AIResponse>
                 </AIMessageContent>
                 {/* avatar component */}
-                {/* {message.role === "assistant" && (
+                {message.role === "assistant" && (
                   <DicebearAvatar
                     imageUrl="/logo.svg"
                     seed="assistant"
                     size={32}
                   />
-                )} */}
+                )}
               </AIMessage>
             ))}
            </AIConversationContent>
