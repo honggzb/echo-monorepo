@@ -4,6 +4,7 @@ import { internal } from "../_generated/api";
 import { supportAgent } from "../system/ai/agents/supportAgent";
 import { paginationOptsValidator } from "convex/server";
 
+//use action since this can trigger async generation and we don't want to keep the client waiting
 export const createMessage = action({
   args: {
     prompt: v.string(),
@@ -12,7 +13,7 @@ export const createMessage = action({
   },
   handler: async (ctx, args) => {
     const contactSession = await ctx.runQuery(
-      internal.system.contactSessions.getOneContactSession,
+      internal.public.contactSessions.getOneContactSession,
       {
         contactSessionId: args.contactSessionId,
       }
@@ -26,10 +27,9 @@ export const createMessage = action({
     }
 
     const conversation = await ctx.runQuery(
-      internal.system.conversations.getOneConversation,
+      internal.public.conversations.getByThreadId,
       {
-        conversationId: args.threadId,
-        contactSessionId: args.contactSessionId,
+        threadId: args.threadId
       }
     );
 

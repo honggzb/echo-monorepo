@@ -1,5 +1,5 @@
 import { ConvexError, v } from "convex/values";
-import { mutation, query } from "../_generated/server";
+import { internalQuery, mutation, query } from "../_generated/server";
 import { supportAgent } from "../system/ai/agents/supportAgent";
 import { components } from "../_generated/api";
 import { saveMessage } from "@convex-dev/agent";
@@ -39,6 +39,20 @@ export const getOneConversation = query({
             threadId: conversation.threadId,
         };
     }
+});
+
+export const getByThreadId = internalQuery({
+  args: {
+    threadId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const conversation = await ctx.db
+      .query("conversations")
+      .withIndex("by_thread_id", (q) => q.eq("threadId", args.threadId))
+      .unique();
+
+    return conversation;
+  },
 });
 
 export const createConversation = mutation({
