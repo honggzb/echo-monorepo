@@ -56,6 +56,7 @@
 ### Dashboard Chat screen
 
 1. add Jotai provider to 'apps\web\modules\dashboard\ui\layouts\dashboard-layout.tsx'
+   1. create 'apps\web\modules\dashboard\atoms.ts' and 'apps\web\modules\dashboard\constant.ts'
 2. create `ConversationIdView` view
    1. `pnpm -F web add countries-and-timezones`
    2. create a file 'apps\web\lib\country-utils.ts'
@@ -72,3 +73,26 @@
 3. create `enhanceResponse` function, modify `createMessage` function in 'packages\backend\convex\public\messages.ts'
 4. modify `getManyConversations` function in 'packages\backend\convex\public\messages.ts'
 
+```
+├─ web
+│  ├─ app
+│  │  └─ (dashboard)
+│  │     └─ conversations
+│  │        ├─ [conversationId]
+│  │        │     └─ page.tsx
+│  │        ├─ layout.tsx
+│  │        └─ page.tsx
+│  ├─ modules
+│  │  └─ dashboard
+│  │     ├─ ui
+│  │     │  ├─ components
+│  │     │  │  ├─ conversation-status-button.tsx
+│  │     │  │  └─ conversations-panel.tsx
+│  │     │  ├─ layouts
+│  │     │  │  └─ conversations-layout.tsx
+│  │     │  └─ views
+│  │     │     ├─ conversation-id-view.tsx
+│  │     │     └─ conversations-view.tsx
+│  │     ├─ atoms.ts
+│  │     └─ constants.ts
+```
