@@ -5,14 +5,14 @@ interface UseInfiniteScrollProps {
   status: "LoadingFirstPage" | "CanLoadMore" | "LoadingMore" | "Exhausted";
   loadMore: (numItems: number) => void;
   loadSize?: number;
-  observerEnable?: boolean;
+  observerEnabled?: boolean;
 }
 
 export function useInfiniteScroll({
   status,
   loadMore,
   loadSize = 10,
-  observerEnable = true,
+  observerEnabled = true,
 }: UseInfiniteScrollProps) {
   const topElementRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +24,7 @@ export function useInfiniteScroll({
 
   useEffect(() => {
     const topElement = topElementRef.current;
-    if (!topElement || !observerEnable) return;
+    if (!topElement || !observerEnabled) return;
 
     const observer = new IntersectionObserver(
       ([entries]) => {
@@ -39,7 +39,7 @@ export function useInfiniteScroll({
       observer.disconnect();
     };
 
-  }, [handleLoadMore, observerEnable]);
+  }, [handleLoadMore, observerEnabled]);
 
   return {
     topElementRef,

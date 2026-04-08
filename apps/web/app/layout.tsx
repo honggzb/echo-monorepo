@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google"
 
-import "@workspace/ui/globals.css"
-import { ThemeProvider } from "@/components/theme-provider";
+import "@workspace/ui/styles/globals.css"
 //import { Toaster } from "@workspace/ui/components/sonner";
 import { ClerkProvider } from '@clerk/nextjs'
 import ConvexClientProvider from '@/components/ConvexClientProvider'

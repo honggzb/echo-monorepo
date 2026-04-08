@@ -36,5 +36,5 @@ npm-debug.log*
 *.pem
 
 # skills
-.agents
+.github
 skills-lock.json

@@ -24,7 +24,6 @@ import {
   Mic,
   PaletteIcon,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { cn } from '@workspace/ui/lib/utils';
 

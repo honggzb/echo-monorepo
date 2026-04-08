@@ -1,25 +1,21 @@
 "use client";
 
-import { useEffect, useState } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useThreadMessages, toUIMessages } from '@convex-dev/agent/react';
-import { errorMessageAtom, screenAtom, organizationIdAtom, contactSessionIdAtomFamily, conversationIdAtom } from '../atoms/widget-atoms';
-import { AlertTriangleIcon, ArrowLeftIcon, MenuIcon } from 'lucide-react';
+import { screenAtom, organizationIdAtom, contactSessionIdAtomFamily, conversationIdAtom } from '../atoms/widget-atoms';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Field, FieldGroup } from "@workspace/ui/components/field";
+import { FieldGroup } from "@workspace/ui/components/field";
 import { Controller, useForm } from 'react-hook-form';
 import { WidgetHeader } from '../components/widget-header';
-import { useAction, useMutation, useQuery } from 'convex/react';
+import { useAction, useQuery } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
 import { Button } from '@workspace/ui/components/button';
 import {
   AIConversation,
   AIConversationContent,
-  AIConversationScrollButton,
 } from "@workspace/ui/components/ai/conversation";
 import {
-  AIInput,
   AIInputSubmit,
   AIInputTextarea,
   AIInputToolbar,
@@ -33,6 +29,7 @@ import { AIResponse } from "@workspace/ui/components/ai/response";
 import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
 import InfiniteScrollTrigger from '@workspace/ui/components/InfiniteScrollTrigger';
 import DicebearAvatar from '@workspace/ui/components/dicebear-avatar';
+import { ArrowLeftIcon, MenuIcon } from 'lucide-react';
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
