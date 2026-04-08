@@ -1,39 +1,43 @@
-
-import { cn } from "@workspace/ui/lib/utils";
 import { CheckIcon, ArrowRightIcon, ArrowUpIcon } from "lucide-react";
-
-interface ConversationStatusIconProps {
-  status: "unresolved" | "escalated" | "resolved",
-  className?: string;
-};
-
-const statusConfig = {
-  resolved: {
-    icon: CheckIcon,
-    bgColor: "bg-[#3FB62F]",
-  },
-  unresolved: {
-    icon: ArrowRightIcon,
-    bgColor: "bg-destructive",
-  },
-  escalated: {
-    icon: ArrowUpIcon,
-    bgColor: "bg-yellow-500",
-  },
-} as const;
+import { Hint } from "./hint";
+import { Button } from "./button";
+import { Doc } from "@workspace/backend/convex/_generated/dataModel";
 
 const ConversationStatusIcon = ({
   status,
-  className,
-}: ConversationStatusIconProps) => {
+  onClick,
+}: {
+  status: Doc<"conversations">["status"];
+  onClick?: () => void;
+}) => {
 
-  const config = statusConfig[status];
-  const Icon = config.icon;
+  if(status === "resolved") {
+    return (
+      <Hint text="Mark as unresolved">
+        <Button onClick={onClick} size="sm" variant="tertiary">
+          <CheckIcon />Escalated
+        </Button>
+      </Hint>
+    )
+  }
+
+  if(status === "escalated") {
+    return (
+      <Hint text="Mark as resolved">
+        <Button onClick={onClick} size="sm" variant="warning">
+          <ArrowUpIcon />Unresolved
+        </Button>
+      </Hint>
+    )
+  }
+
 
   return (
-    <div className={cn("flex items-center justify-center rounded-full size-5", config.bgColor,  className)}>
-      <Icon className="size-3 stroke-3 text-white" />
-    </div>
+    <Hint text="Mark as escalated">
+        <Button onClick={onClick} size="sm" variant="ghost">
+          <ArrowRightIcon />
+        </Button>
+    </Hint>
   )
 }
 

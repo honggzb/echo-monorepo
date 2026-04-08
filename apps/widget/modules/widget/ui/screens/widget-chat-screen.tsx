@@ -43,12 +43,12 @@ const WidgetChatScreen = () => {
   const contactSessionId = useAtomValue(contactSessionIdAtomFamily(organizationId || ""));
 
   const conversation = useQuery(
-    api.public.conversations.getOneConversation,
+    api.private.conversations.getOneConversation,
     conversationId && contactSessionId ? { conversationId, contactSessionId } : "skip"
   );
 
   const messages = useThreadMessages(
-    api.public.messages.getManyMessages,
+    api.private.messages.getManyMessages,
     conversation?.threadId && contactSessionId
       ? { threadId: conversation.threadId, contactSessionId }
       : "skip",
@@ -69,7 +69,7 @@ const WidgetChatScreen = () => {
     },
   });
 
-  const createMessage = useAction(api.public.messages.createMessage);
+  const createMessage = useAction(api.private.messages.createMessage);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (!conversation || !contactSessionId) {

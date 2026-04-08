@@ -56,7 +56,7 @@ const ConversationsPanel = () => {
   const setStatusFilter = useSetAtom(statusFilterAtom);
 
   const conversations = usePaginatedQuery(
-    api.public.conversations.getManyConversations,
+    api.private.conversations.getManyConversations,
     { status: statusFilter === "all" ? undefined : statusFilter, },
     { initialNumItems: 10, },
   );

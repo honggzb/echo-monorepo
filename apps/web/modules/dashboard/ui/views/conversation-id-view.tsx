@@ -31,15 +31,16 @@ import { ConversationStatusButton } from "../components/conversation-status-butt
 import { useState } from 'react';
 import InfiniteScrollTrigger from '@workspace/ui/components/InfiniteScrollTrigger';
 import DicebearAvatar from '@workspace/ui/components/dicebear-avatar';
+import { rm } from 'node:fs';
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
 });
 
 const ConversationIdView = ({ conversationId }: { conversationId: Id<"conversations"> }) => {
-  const conversation = useQuery(api.public.conversations.getOneConversation, { conversationId });
+  const conversation = useQuery(api.private.conversations.getOneConversation, { conversationId });
   const messages = useThreadMessages(
-    api.public.messages.getManyMessages,
+    api.private.messages.getManyMessages,
     conversation?.threadId ? { threadId: conversation.threadId } : "skip",
     { initialNumItems: 10 }
   );
@@ -63,9 +64,9 @@ const ConversationIdView = ({ conversationId }: { conversationId: Id<"conversati
   });
 
   const [isEnhancing, setIsEnhancing] = useState(false);
-  const enhanceResponse = useAction(api.public.messages.enhanceResponse);
+  const enhanceResponse = useAction(api.private.messages.enhanceResponse);
 
-  const handleEnhanceResponse = async (messageId: Id<"messages">) => {
+  const handleEnhanceResponse = async () => {
     setIsEnhancing(true);
     const currentValue = form.getValues("message");
     try {
@@ -78,7 +79,7 @@ const ConversationIdView = ({ conversationId }: { conversationId: Id<"conversati
     }
   }
 
-  const createMessage = useMutation(api.public.messages.createMessage);
+  const createMessage = useMutation(api.private.messages.createMessage);
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       await createMessage({ prompt: data.message, conversationId });
@@ -89,12 +90,11 @@ const ConversationIdView = ({ conversationId }: { conversationId: Id<"conversati
   }
 
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
-  const updateConversationStatus = useMutation(api.public.conversations.updateStatus);
+  const updateConversationStatus = useMutation(api.private.conversations.updateStatus);
   const handleToggleStatus = async () => {
     if (!conversation) {
       return;
     }
-
     setIsUpdatingStatus(true);
     let newStatus: "unresolved" | "resolved" | "escalated";
     // Cycle through states: unresolved -> escalated -> resolved -> unresolved
@@ -126,11 +126,13 @@ const ConversationIdView = ({ conversationId }: { conversationId: Id<"conversati
           <MoreHorizontalIcon />
         </Button>
         {!!conversation && (
-          <ConversationStatusButton
-            onClick={handleToggleStatus}
-            status={conversation.status}
-            disabled={isUpdatingStatus}
-          />
+          <div style={{right: `${2.5}rem`, position: "absolute"}}>
+            <ConversationStatusButton
+              onClick={handleToggleStatus}
+              status={conversation.status}
+              disabled={isUpdatingStatus}
+            />
+          </div>
         )}
       </header>
       <AIConversation className="max-h-[calc(100vh-180px)]">

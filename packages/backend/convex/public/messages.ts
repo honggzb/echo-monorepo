@@ -8,58 +8,57 @@ import { generateText } from "ai";
 import { saveMessage } from "@convex-dev/agent";
 
 //use action since this can trigger async generation and we don't want to keep the client waiting
-export const createMessage = mutation({
-  args: {
-    prompt: v.string(),
-    conversationId: v.id("conversations"),
-  },
-  handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (identity === null) {
-      throw new ConvexError({
-        code: "UNAUTHORIZED",
-        message: "Identity not found",
-      });
-    }
+// export const createMessage = action({
+//   args: {
+//     prompt: v.string(),
+//     conversationId: v.id("conversations"),
+//     contactSessionId: v.id("contactSessions"),
+//   },
+//   handler: async (ctx, args) => {
+//     const contactSession = await ctx.runQuery(
+//       internal.contactSessions.getOneSession,
+//       {
+//         contactSessionId: args.contactSessionId,
+//       }
+//     );
 
-    const orgId = identity.orgId as string;
-    if (!orgId) {
-      throw new ConvexError({
-        code: "UNAUTHORIZED",
-        message: "Organization not found",
-      });
-    }
+//     if (!contactSession || contactSession.expiresAt < Date.now()) {
+//       throw new ConvexError({
+//         code: "UNAUTHORIZED",
+//         message: "Invalid session",
+//       });
+//     }
 
-    const conversation = await ctx.db.get(args.conversationId);
-    if (!conversation) {
-      throw new ConvexError({
-        code: "NOT_FOUND",
-        message: "Conversation not found",
-      });
-    }
-    if (conversation.organizationId !== orgId) {
-      throw new ConvexError({
-        code: "UNAUTHORIZED",
-        message: "Invalid Organization ID",
-      });
-    }
-    if (conversation.status === "resolved") {
-      throw new ConvexError({
-        code: "BAD_REQUEST",
-        message: "Conversation resolved",
-      });
-    }
+//     const conversation = await ctx.db.get(args.conversationId);
+//     if (!conversation) {
+//       throw new ConvexError({
+//         code: "NOT_FOUND",
+//         message: "Conversation not found",
+//       });
+//     }
+//     if (conversation.organizationId !== orgId) {
+//       throw new ConvexError({
+//         code: "UNAUTHORIZED",
+//         message: "Invalid Organization ID",
+//       });
+//     }
+//     if (conversation.status === "resolved") {
+//       throw new ConvexError({
+//         code: "BAD_REQUEST",
+//         message: "Conversation resolved",
+//       });
+//     }
 
-    await saveMessage(ctx, components.agent,  {
-      threadId: conversation.threadId,
-      agentName: identity.familyName,
-       message: {
-        role: "assistant",
-        content: args.prompt,
-      },
-    });
-  }
-});
+//     await saveMessage(ctx, components.agent,  {
+//       threadId: conversation.threadId,
+//       agentName: identity.familyName,
+//        message: {
+//         role: "assistant",
+//         content: args.prompt,
+//       },
+//     });
+//   }
+// });
 
 export const getManyMessages = query({
   args: {

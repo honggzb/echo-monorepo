@@ -1,25 +1,3 @@
-# shadcn/ui monorepo template
-
-This is a Next.js monorepo template with shadcn/ui.
-
-## Adding components
-
-To add components to your app, run the following command at the root of your `web` app:
-
-```bash
-pnpm dlx shadcn@latest add button -c apps/web
-```
-
-This will place the ui components in the `packages/ui/src/components` directory.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button";
-```
-
 ```
 ├─ web
 │  ├─ app
@@ -36,6 +14,9 @@ import { Button } from "@workspace/ui/components/button";
 │  │  │          └─ page.tsx
 │  │  ├─ (dashboard)
 │  │  │  ├─ conversations
+│  │  │  │  ├─ [conversationId]
+│  │  │  │  │     └─ page.tsx
+│  │  │  │  ├─ layout.tsx
 │  │  │  │  └─ page.tsx
 │  │  │  ├─ customization
 │  │  │  │  └─ page.tsx
@@ -81,14 +62,19 @@ import { Button } from "@workspace/ui/components/button";
 │  │  │        ├─ sign-in-view.tsx
 │  │  │        └─ sign-up-view.tsx
 │  │  └─ dashboard
-│  │     └─ ui
-│  │        ├─ components
-│  │        │  └─ dashboard-sidebar.tsx
-│  │        ├─ layouts
-│  │        │  └─ dashboard-layout.tsx
-│  │        └─ views
-│  │           ├─ conversation-id-view.tsx
-│  │           └─ conversations-view.tsx
+│  │     ├─ ui
+│  │     │  ├─ components
+│  │     │  │  ├─ conversation-status-button.tsx
+│  │     │  │  ├─ conversations-panel.tsx
+│  │     │  │  └─ dashboard-sidebar.tsx
+│  │     │  ├─ layouts
+│  │     │  │  ├─ conversations-layout.tsx
+│  │     │  │  └─ dashboard-layout.tsx
+│  │     │  └─ views
+│  │     │     ├─ conversation-id-view.tsx
+│  │     │     └─ conversations-view.tsx
+│  │     ├─ atoms.ts
+│  │     └─ constants.ts
 ```
 
 ```

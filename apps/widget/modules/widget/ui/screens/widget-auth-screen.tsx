@@ -41,7 +41,7 @@ const WidgetAuthScreen = () => {
   const setScreen = useSetAtom(screenAtom);
   const organizationId = useAtomValue(organizationIdAtom);
   const setContactSessionId = useSetAtom(contactSessionIdAtomFamily(organizationId || ""));
-  const createContactSession = useMutation(api.public.contactSessions.createContactSession);
+  const createContactSession = useMutation(api.private.contactSessions.createContactSession);
 
   const onSubmit = async (data: WidgetAuthFormData) => {
     console.log("Form submitted:", data);

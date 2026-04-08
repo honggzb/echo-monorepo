@@ -19,7 +19,7 @@ const WidgetInboxScreen = () => {
   const contactSessionId = useAtomValue(contactSessionIdAtomFamily(organizationId || ""));
 
   const conversations = usePaginatedQuery(
-    api.public.conversations.getManyConversations,
+    api.private.conversations.getManyConversations,
     contactSessionId ? { contactSessionId } : "skip",
     {initialNumItems: 10 }
   );
