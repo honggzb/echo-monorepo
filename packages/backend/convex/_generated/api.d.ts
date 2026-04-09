@@ -21,6 +21,7 @@ import type * as public_organization from "../public/organization.js";
 import type * as system_ai_agents_supportAgent from "../system/ai/agents/supportAgent.js";
 import type * as system_ai_constants from "../system/ai/constants.js";
 import type * as system_ai_rag from "../system/ai/rag.js";
+import type * as system_ai_tools_search from "../system/ai/tools/search.js";
 import type * as users from "../users.js";
 
 import type {
@@ -43,6 +44,7 @@ declare const fullApi: ApiFromModules<{
   "system/ai/agents/supportAgent": typeof system_ai_agents_supportAgent;
   "system/ai/constants": typeof system_ai_constants;
   "system/ai/rag": typeof system_ai_rag;
+  "system/ai/tools/search": typeof system_ai_tools_search;
   users: typeof users;
 }>;
 

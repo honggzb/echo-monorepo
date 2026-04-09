@@ -1,9 +1,7 @@
-import React from 'react'
+import FilesView from '@/modules/files/ui/views/files-view'
 
 const Page = () => {
-  return (
-    <div>files Page</div>
-  )
+  return <FilesView />;
 }
 
 export default Page

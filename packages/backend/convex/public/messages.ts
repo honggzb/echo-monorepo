@@ -6,59 +6,79 @@ import { paginationOptsValidator } from "convex/server";
 import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { saveMessage } from "@convex-dev/agent";
+import { escalateConversation } from "./conversations";
+import { search } from "../system/ai/tools/search";
 
 //use action since this can trigger async generation and we don't want to keep the client waiting
-// export const createMessage = action({
-//   args: {
-//     prompt: v.string(),
-//     conversationId: v.id("conversations"),
-//     contactSessionId: v.id("contactSessions"),
-//   },
-//   handler: async (ctx, args) => {
-//     const contactSession = await ctx.runQuery(
-//       internal.contactSessions.getOneSession,
-//       {
-//         contactSessionId: args.contactSessionId,
-//       }
-//     );
+export const createMessage = action({
+  args: {
+    prompt: v.string(),
+    threadId: v.string(),
+    contactSessionId: v.id("contactSessions"),
+  },
+  handler: async (ctx, args) => {
+    const contactSession = await ctx.runQuery(
+      internal.public.contactSessions.getOneContactSession,
+      {
+        contactSessionId: args.contactSessionId,
+      }
+    );
 
-//     if (!contactSession || contactSession.expiresAt < Date.now()) {
-//       throw new ConvexError({
-//         code: "UNAUTHORIZED",
-//         message: "Invalid session",
-//       });
-//     }
+    if (!contactSession || contactSession.expiresAt < Date.now()) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Invalid session",
+      });
+    }
 
-//     const conversation = await ctx.db.get(args.conversationId);
-//     if (!conversation) {
-//       throw new ConvexError({
-//         code: "NOT_FOUND",
-//         message: "Conversation not found",
-//       });
-//     }
-//     if (conversation.organizationId !== orgId) {
-//       throw new ConvexError({
-//         code: "UNAUTHORIZED",
-//         message: "Invalid Organization ID",
-//       });
-//     }
-//     if (conversation.status === "resolved") {
-//       throw new ConvexError({
-//         code: "BAD_REQUEST",
-//         message: "Conversation resolved",
-//       });
-//     }
+    const conversation = await ctx.runQuery(
+      internal.public.conversations.getByThreadId,
+      {
+        threadId: args.threadId,
+      }
+    );
+    if (!conversation) {
+      throw new ConvexError({
+        code: "NOT_FOUND",
+        message: "Conversation not found",
+      });
+    }
 
-//     await saveMessage(ctx, components.agent,  {
-//       threadId: conversation.threadId,
-//       agentName: identity.familyName,
-//        message: {
-//         role: "assistant",
-//         content: args.prompt,
-//       },
-//     });
-//   }
-// });
+    if (conversation.status === "resolved") {
+      throw new ConvexError({
+        code: "BAD_REQUEST",
+        message: "Conversation resolved",
+      });
+    }
+
+    // This refreshes the user's session if they are within the threshold
+    // await ctx.runMutation(internal.public.contactSessions.refresh, {
+    //   contactSessionId: args.contactSessionId,
+    // });
+
+    const shouldTriggerAgent = conversation.status === "unresolved";
+    if(shouldTriggerAgent) {
+      await supportAgent.generateText(
+        ctx,
+        { threadId: args.threadId },
+        {
+          prompt: args.prompt,
+          tools:
+          {
+            //escalateConversationTool: escalateConversation,
+            //resolveConversationTool: resolveConversation,
+            searchTool: search,
+          },
+        },
+      );
+    } else {
+      await saveMessage(ctx, components.agent,  {
+        threadId: args.threadId,
+        prompt: args.prompt,
+      });
+    }
+  }
+});
 
 export const getManyMessages = query({
   args: {

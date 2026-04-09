@@ -10,7 +10,7 @@
 //         if(!ctx.threadId) {
 //             return "Missing thread ID";
 //         }
-//         await ctx.runMutation(internal.conversations.escalateConversation, { threadId: ctx.threadId });
+//         await ctx.runMutation(internal.public.conversations.escalateConversation, { threadId: ctx.threadId });
 
 //         await supportAgent.saveMessage(ctx, {
 //             threadId: ctx.threadId,

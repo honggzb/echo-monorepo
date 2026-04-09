@@ -5,47 +5,47 @@ import { components, internal } from "../_generated/api";
 import { MessageDoc, saveMessage } from "@convex-dev/agent";
 import { paginationOptsValidator, PaginationResult } from "convex/server";
 
-// export const escalateConversation = internalMutation({
-//   args: {
-//     threadId: v.string(),
-//   },
-//   handler: async (ctx, args) => {
-//     const conversation =
-//       await ctx.db.query("conversations")
-//                   .withIndex("by_thread_id", (q) => q.eq("threadId", args.threadId))
-//                   .unique();
-//     if (!conversation) {
-//       throw new ConvexError({
-//         code: "NOT_FOUND",
-//         message: "Conversation not found",
-//       });
-//     }
+export const escalateConversation = internalMutation({
+  args: {
+    threadId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const conversation =
+      await ctx.db.query("conversations")
+                  .withIndex("by_thread_id", (q) => q.eq("threadId", args.threadId))
+                  .unique();
+    if (!conversation) {
+      throw new ConvexError({
+        code: "NOT_FOUND",
+        message: "Conversation not found",
+      });
+    }
 
-//     await ctx.db.patch(conversation._id, {status: "escalated"});
-//   }
+    await ctx.db.patch(conversation._id, {status: "escalated"});
+  }
 
-// });
+});
 
-// export const resolveConversation = internalMutation({
-//   args: {
-//     threadId: v.string(),
-//   },
-//   handler: async (ctx, args) => {
-//     const conversation =
-//       await ctx.db.query("conversations")
-//                   .withIndex("by_thread_id", (q) => q.eq("threadId", args.threadId))
-//                   .unique();
-//     if (!conversation) {
-//       throw new ConvexError({
-//         code: "NOT_FOUND",
-//         message: "Conversation not found",
-//       });
-//     }
+export const resolveConversation = internalMutation({
+  args: {
+    threadId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const conversation =
+      await ctx.db.query("conversations")
+                  .withIndex("by_thread_id", (q) => q.eq("threadId", args.threadId))
+                  .unique();
+    if (!conversation) {
+      throw new ConvexError({
+        code: "NOT_FOUND",
+        message: "Conversation not found",
+      });
+    }
 
-//     await ctx.db.patch(conversation._id, {status: "resolved"});
-//   }
+    await ctx.db.patch(conversation._id, {status: "resolved"});
+  }
 
-// });
+});
 
 export const getOneConversation = query({
     args: {
