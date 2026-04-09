@@ -7,6 +7,7 @@ import { supportAgent } from "./system/ai/agents/supportAgent";
  * Authorization is handled by passing up an apiKey that can be generated
  * on the dashboard or via CLI via:
  * npx convex run --component agent apiKeys:issue
+ * https://docs.convex.dev/agents/playground
  */
 export const {
   isApiKeyValid,
