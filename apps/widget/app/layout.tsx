@@ -2,8 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google"
 
 import "@workspace/ui/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Providers } from "@/components/convex-provider"
 import { cn } from "@workspace/ui/lib/utils";
+import { Providers } from "@/components/convex-provider";
 
 const fontSans = Geist({
   subsets: ["latin"],

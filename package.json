@@ -7,7 +7,9 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "turbo format",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "format:prettier": "prettier --write .",
+    "fix:eslint": "eslint --fix ."
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",

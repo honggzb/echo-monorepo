@@ -1,17 +1,20 @@
 "use client";
 
-import { Button } from "@workspace/ui/components/button"
-import { useQuery } from "convex/react";
-import { api } from "@workspace/backend/_generated/api";
+import WidgetView from "@/modules/widget/ui/views/widget-view";
+import { use } from "react";
 
-export default function Page() {
-  const users = useQuery(api.users.getUsers);
+interface PageProps {
+  searchParams: Promise<{ organizationId: string }>;
+}
+
+const Page = ({ searchParams }: PageProps) => {
+  const { organizationId } = use(searchParams);
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        widget app
-        <p>{JSON.stringify(users)}</p>
-      </div>
-    </div>
+    <WidgetView organizationId={organizationId}  />
   )
 }
+
+export default Page;
+
+// http://localhost:3001/?organizationId=org_3AlUuPMDBzt0jzB685wVRgznERI
