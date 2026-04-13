@@ -606,10 +606,13 @@ sequenceDiagram
    1. upload file such as 'faq.txt'
    2. go to 'http://localhost:3001/?organizationId=xxx' to ask question in 'faq.txt'
    3. should got answer in 'faq.txt'
-2. improve prompts --> make sure questions are in the knowledge base
+2. limit answer in local knowledge
+   1. create `SUPPORT_AGENT_PROMPT` in 'packages\backend\convex\system\ai\constants.ts`
+   2. add `SUPPORT_AGENT_PROMPT` to `content` 'packages\backend\convex\system\ai\tools\search.ts'
+3. improve prompts --> make sure questions are in the knowledge base
    1. create 'packages\backend\convex\system\ai\constants.ts'
    2. add `searchTool` to `createMessage` function 'packages\backend\convex\public\messages.ts'
-3. Debug tips
+4. Debug tips
    1. `pnpm -F backend add @convex-dev/agent-playground`
    2. create 'packages\backend\convex\playground.ts'
    3. go to 'packages/backend' directory
